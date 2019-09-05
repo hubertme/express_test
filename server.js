@@ -14,7 +14,7 @@ app.get('/', function(req, res) {
 });
 
 // Fetch all users
-app.get('/users', (req,res) => {
+app.get('/user', (req,res) => {
     let responseJson = userData.map( (user) => {
         return {
             id: user.id,
@@ -60,6 +60,36 @@ app.post('/user', (req, res) => {
         message: 'Success adding user',
         user: user
     })
+});
+
+// Modify user
+app.put('/user/:id', (req, res) => {
+    let userId = parseInt(req.params.id);
+    // let userRequested = userData[userId-1];
+    // userData = userData.filter((user) => user.id !== userId)
+
+    let body = req.body;
+    let acceptedKey = ['name', 'age', 'salary', 'isMarried'];
+    let keys = Object.keys(body);
+    let isValid = true;
+    keys.forEach((key) => {
+        if (!acceptedKey.includes(key)) {
+            isValid = false;
+        }
+    });
+
+    if (!isValid) {
+        res.status(500).send({message: 'Illegal element to be changed!'})
+    } else if (userId === 0 || userId > userData.length) {
+        res.status(404).send({message: 'No user to be changed'})
+    } else {
+        console.log('Body', body);
+        keys.forEach( (key) => {
+            userData[userId-1][key] = body[key];
+        });
+
+        res.status(200).send({message: 'Successfully updated user!', user: userData[userId-1]});
+    }
 });
 
 app.listen(PORT, function() {
