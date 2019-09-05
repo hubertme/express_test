@@ -1,0 +1,11 @@
+{
+  "name": "foodon_server",
+  "version": "1.0.0",
+  "description": "Server for FoodOn service",
+  "main": "server.js",
+  "author": "FoodOn",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
