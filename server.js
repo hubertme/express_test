@@ -5,12 +5,16 @@ const isProduction = false;
 
 var app = express();
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({extended: true}));
+// app.use(express.static(__dirname + '/public'));
+app.set('views', __dirname + '/screens');
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
 var userData = [];
 
 app.get('/', function(req, res) {
-    res.status(200).send('Hello world');
+    // res.status(200).send('Hello world');
+    res.render('index.html');
 });
 
 // Fetch all users
