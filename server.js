@@ -28,6 +28,22 @@ app.get('/users', (req,res) => {
     res.status(200).send(responseJson);
 });
 
+// Fetch user with id
+app.get(`/user/:id`, (req,res) => {
+    let userId = parseInt(req.params.id);
+    let userRequested = userData.filter( (user) => user.id === userId);
+
+    if (userRequested.length === 0) {
+        res.status(404).send({message: 'User with id '+userId+' not found'});
+    } else {
+        res.status(200).send({
+            message: 'Success retrieved user!',
+            user: userRequested[0]
+        })
+    }
+
+});
+
 // Create new user
 app.post('/user', (req, res) => {
     let body = req.body;
