@@ -13,6 +13,7 @@ app.get('/', function(req, res) {
     res.status(200).send('Hello world');
 });
 
+// Fetch all users
 app.get('/users', (req,res) => {
     let responseJson = userData.map( (user) => {
         return {
@@ -27,11 +28,21 @@ app.get('/users', (req,res) => {
     res.status(200).send(responseJson);
 });
 
+// Create new user
 app.post('/user', (req, res) => {
-    console.log('Body:', req.body);
+    let body = req.body;
+    let user = {
+        id: userData.length + 1,
+        name: body.name,
+        age: body.age,
+        salary: body.salary,
+        isMarried: body.isMarried
+    };
+    userData.push(user);
 
-    res.status(500).send({
-        message: 'This endpoint is still under construction'
+    res.status(200).send({
+        message: 'Success adding user',
+        user: user
     })
 });
 
